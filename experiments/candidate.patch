@@ -1,0 +1,32 @@
+diff --git a/dist/update/update.d.ts b/dist/update/update.d.ts
+index 948c0170f02420cbdf071a5907bd48cab2a653f4..0aedee552d19fad6f65bb239af200d8d11f35989 100644
+--- a/dist/update/update.d.ts
++++ b/dist/update/update.d.ts
+@@ -156,9 +156,13 @@ type DirectResultEvidenceChannelOf<Value> = Value extends unknown ? typeof Regis
+     [RegistrationEvidenceTypeId]?: infer EvidenceFunction;
+ }> ? [NonNullable<EvidenceFunction>] extends [never] ? never : NonNullable<EvidenceFunction> extends () => infer Evidence ? Evidence : never : never : never : never;
+ /** @internal Extracts the unfiltered graph evidence retained by an update result. */
+-export type ResultEvidenceChannelOf<Value> = Value extends DeferredUpdateEvidence<any, any, any, infer Evidence> ? Evidence : DirectResultEvidenceChannelOf<Value> | (Value extends unknown ? 'commands' extends keyof Value ? Value extends Readonly<{
+-    commands?: infer CommandValues;
+-}> ? DirectResultEvidenceChannelOf<NonNullable<CommandValues>> : never : never : never);
++/** Temporary f3be preview type-performance correction for the large Root graph.
++ * Read declared Commands without structurally inferring the whole result. Keep
++ * legacy inference for index-only shapes, plus both result/Commands evidence.
++ * Remove when upstream ships this correction and unpatched full checks pass.
++ * See odd/tasks/foldkit-root-metadata-extraction.md in Better Auth UI. */
++type ResultCommandsOf<Value> = Value extends unknown ? 'commands' extends keyof Value ? Required<Value> extends Readonly<{ commands: unknown }> ? NonNullable<Value['commands']> : Value extends Readonly<{ commands?: infer CommandValues }> ? NonNullable<CommandValues> : never : never : never;
++export type ResultEvidenceChannelOf<Value> = Value extends DeferredUpdateEvidence<any, any, any, infer Evidence> ? Evidence : DirectResultEvidenceChannelOf<Value> | DirectResultEvidenceChannelOf<ResultCommandsOf<Value>>;
+ type InvalidResultEvidence<Value> = ResultEvidenceChannelOf<Value> extends infer Evidence ? 0 extends 1 & Evidence ? Evidence : unknown extends Evidence ? Evidence : never : never;
+ /** @internal Rejects update results whose graph evidence was widened away. */
+ export type ValidateConcreteResultEvidence<Value> = [
+@@ -173,9 +177,7 @@ type ConcreteRegistrationPart<Evidence> = Evidence extends AnyDeferredResultEvid
+  * its Commands. A raw Binding operation reports its direct child registration;
+  * policy-produced registrations remain an opaque obligation until a completed
+  * Composition resolves them against its registered graph. */
+-export type RegistrationEvidenceOf<Value> = Value extends DeferredUpdateEvidence<any, any, any, infer Evidence> ? ConcreteRegistrationPart<Evidence> : ConcreteRegistrationPart<DirectResultEvidenceChannelOf<Value>> | (Value extends unknown ? 'commands' extends keyof Value ? Value extends Readonly<{
+-    commands?: infer CommandValues;
+-}> ? ConcreteRegistrationPart<DirectResultEvidenceChannelOf<NonNullable<CommandValues>>> : never : never : never);
++export type RegistrationEvidenceOf<Value> = Value extends DeferredUpdateEvidence<any, any, any, infer Evidence> ? ConcreteRegistrationPart<Evidence> : ConcreteRegistrationPart<DirectResultEvidenceChannelOf<Value>> | ConcreteRegistrationPart<DirectResultEvidenceChannelOf<ResultCommandsOf<Value>>>;
+ type RegistrationModelOf<Value> = Value extends Readonly<{
+     model: infer Model;
+ }> ? Model : never;
