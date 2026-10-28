@@ -18,4 +18,4 @@ for level in range(1,9):
  s+=f'const C{level}=D{level}.makeComposition({{bindings:['+','.join(f'b{level}_{i}' for i in range(n))+']});\n'
  s+=f'const prep{level}=()=>C{level}.prepareBlock({{init:C{level}.makeInit(()=>({{model:{{}}}})),update:C{level}.makeUpdate({{Inc:model=>Update.combineSteps(['+','.join(f'b{level}_{i}.inc()' for i in range(n))+f'])(model)}}),operations:{{inc:()=>Tuple.make(E{level}.Inc())}}}});\n'
  s+=f'const B{level}:Block.FromAssemblyWithoutViewOrOutMessage<typeof M{level},typeof prep{level}>=Block.assemble(prep{level});\n'
-s+='export {B8};\n';Path('src.ts').write_text(s)
+s+='export {B8};\n';Path('stress/generated.ts').write_text(s)

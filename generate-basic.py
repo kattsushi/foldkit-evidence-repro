@@ -16,4 +16,4 @@ s+=''.join(f'M{i}: {{}},\n' for i in range(m))+'}) });\n'
 s+=''.join(f'const b{i}=P.makeBinding(Child, {{field:"b{i}", init:{{contextToArgs:()=>Tuple.make()}}}});\n' for i in range(n))
 s+='const Root=P.makeComposition({ bindings:['+','.join('b'+str(i) for i in range(n))+'] });\n'
 s+='const update=Root.makeUpdate({\n'+''.join(f'M{i}: model => b{i%n}.inc()(model),\n' for i in range(m))+'});\nexport {update};\n'
-Path('src.ts').write_text(s)
+Path('stress/generated.ts').write_text(s)

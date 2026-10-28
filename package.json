@@ -9,5 +9,11 @@
   },
   "devDependencies": {
     "@typescript/native": "npm:typescript@7.1.0-beta"
+  },
+  "scripts": {
+    "dev": "bun example/dev.js",
+    "typecheck:example": "node node_modules/@typescript/native/bin/tsc -p tsconfig.example.json",
+    "typecheck:stress": "node node_modules/@typescript/native/bin/tsc -p tsconfig.json",
+    "verify:contracts": "python scripts/verify-contracts.py"
   }
 }

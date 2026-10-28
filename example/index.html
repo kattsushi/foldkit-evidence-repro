@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Foldkit task board</title>
+    <style>
+      body {
+        font:
+          16px/1.5 system-ui,
+          sans-serif;
+        margin: 2rem auto;
+        max-width: 48rem;
+        padding: 0 1rem;
+        color: #202632;
+      }
+      .cards {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      section {
+        border: 1px solid #c9d1da;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        min-width: 12rem;
+      }
+      strong {
+        display: block;
+        font-size: 2rem;
+      }
+      button {
+        cursor: pointer;
+        padding: 0.5rem 0.8rem;
+      }
+      .notice {
+        background: #fff8da;
+        padding: 0.8rem;
+        border-radius: 0.4rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Task board</h1>
+    <p class="notice">
+      A runnable Foldkit composition control. It compiles without the patch; it
+      does not reproduce TS2589.
+    </p>
+    <p>
+      Each column is a Counter Block. The board connects them through bindings.
+    </p>
+    <div class="cards">
+      <section>
+        <h2>Today</h2>
+        <strong id="today-count">0</strong
+        ><button id="today-button">Add to today</button>
+      </section>
+      <section>
+        <h2>Backlog</h2>
+        <strong id="backlog-count">0</strong
+        ><button id="backlog-button">Add to backlog</button>
+      </section>
+    </div>
+    <p><button id="both-button">Add to both</button></p>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
