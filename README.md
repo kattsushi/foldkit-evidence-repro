@@ -22,6 +22,10 @@ The 8-level control passed with original declarations in one run (4,216,473 tota
 
 The candidate at `experiments/candidate.patch` is not applied by installation. In the real consumer an A/B comparison, holding configuration and sources fixed, reproduced TS2589 with the original declarations and compiled with this candidate. That consumer is not included in this independent directory. A different previously reported [#1772](https://github.com/foldkit/foldkit/issues/1772) concerns reciprocal policy resolution in an earlier snapshot; [#1709](https://github.com/foldkit/foldkit/issues/1709) tracks broader inference and editor performance.
 
+## Evidence-contract controls
+
+Run `python scripts/verify-contracts.py` after installation. It copies the installed dependencies into a temporary directory and checks 80 named shapes across four metadata channels plus five semantic assertions. Published declarations and the candidate should pass. An intentionally naive indexed extraction without the index-signature fallback must produce TS2344. The temporary copy is removed; the installed declarations stay unchanged. This checks the sampled contracts, not universal equivalence or the large-graph failure.
+
 ## Working hypothesis
 
 ```mermaid
