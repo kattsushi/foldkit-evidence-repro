@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
+    "@foldkit/ui": "0.169.0-canary.f3be22cfeefe",
     "effect": "4.0.0",
     "foldkit": "0.169.0-canary.f3be22cfeefe"
   },
@@ -14,6 +15,9 @@
     "dev": "bun example/dev.js",
     "typecheck:example": "node node_modules/@typescript/native/bin/tsc -p tsconfig.example.json",
     "typecheck:stress": "node node_modules/@typescript/native/bin/tsc -p tsconfig.json",
-    "verify:contracts": "python scripts/verify-contracts.py"
+    "verify:contracts": "python scripts/verify-contracts.py",
+    "typecheck:repro": "node node_modules/@typescript/native/bin/tsc -p tsconfig.repro.json",
+    "compare:repro": "python scripts/compare-repro.py",
+    "runtime:repro": "bun reproduction/runtime.ts"
   }
 }

@@ -1,0 +1,15 @@
+reproduction/large-board.ts(10971,16): error TS2589: Type instantiation is excessively deep and possibly infinite.
+Files:               535
+Lines:            423145
+Identifiers:      374880
+Symbols:         1138352
+Types:            720892
+Instantiations: 48717479
+Memory used:     798485K
+Memory allocs:  38588508
+Config time:      0.000s
+Parse time:       0.098s
+Bind time:        0.028s
+Check time:      20.476s
+Emit time:        0.000s
+Total time:      20.605s
